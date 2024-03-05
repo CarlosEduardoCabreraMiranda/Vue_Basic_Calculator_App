@@ -5,7 +5,8 @@
   </div>
 
   <div class="mainContainer">
-    <router-view />
+    <router-view DevA="Carlos Eduardo Cabrera Miranda" DevB="Alvaro Felipe Avila Vidal" DevC="Juan Jose Urbano Perdomo"
+      DevD="Yhonathan Camilo Gomez Camacho" DevE="Nicolas Alejandro Ruiz" />
   </div>
 </template>
 

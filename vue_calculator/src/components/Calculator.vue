@@ -27,8 +27,8 @@
                 <button @click="append('3')">3</button>
                 <button @click="addition()" class="btn-warning text-white">+</button>
                 <button @click="append('0')">0</button>
-                <button @click="append('(')">(</button>
-                <button @click="append(')')">)</button>
+                <button @click="openParenthesis">(</button>
+                <button @click="closeParenthesis">)</button>
                 <button @click="dot">.</button>
                 <button @click="evaluateExpressionI(current)" class="btn-warning text-white equal">=</button>
 
@@ -104,6 +104,17 @@ export default {
             }
         },
 
+        openParenthesis(){
+            if (this.validSign('(') || this.current === '') {
+                this.append('(');
+            }
+        },
+
+        closeParenthesis() {
+            if (this.validSign(')')) {
+                this.append(')');
+            }
+        },
 
         //Validations
         validSign(sign) {
@@ -123,7 +134,7 @@ export default {
         especialChar(char){
 
             const lastCharacter = this.current.slice(-1);
-            const especialCharacters = ['\n', '=', 'b', 's','p','(',')'];
+            const especialCharacters = ['\n', '=', 'b', 's','p','q','e'];
 
             if (/^\d+$/.test(lastCharacter) && especialCharacters.includes(char)) {
                 // Si el último carácter es un número y el signo es un operador válido, permite el signo
@@ -155,11 +166,11 @@ export default {
                         this.current = this.current.slice(0, -4);
                     }
                     break;
-                case '(':
-                    this.append('(');
+                case 'q':
+                    this.openParenthesis();
                     break;
-                case ')':
-                    this.append(')');
+                case 'e':
+                    this.closeParenthesis();
                     break;
                 default:
                     // Handle invalid operators (optional)
@@ -173,16 +184,17 @@ export default {
 
 
             //Expression test and logics
-            evaluateExpression(expression) {
-                // Split the expression by operators (+, -, *, /, %)
-                const terms = expression.split(/([+\-*/])/).filter(term => term.trim() !== '');
+            //evaluateExpression(expression) {
+
+              //   Split the expression by operators (+, -, *, /, %)
+                //const terms = expression.split(/([+\-*/])/).filter(term => term.trim() !== '');
 
                 // Initialize the result with the first term
-                let result;
+                //let result;
 
-                if(terms[0] === '-'){
-                     result = Number(eval(expression));
-                }else{
+                //if(terms[0] === '-'){
+                    // result = Number(eval(expression));
+                /*}else{
                     result = parseFloat(terms[0]);
                 }
                     
@@ -205,14 +217,14 @@ export default {
                             result /= nextTerm;
                             break;
                         default:
-                            // Handle invalid operators (optional)
+                             Handle invalid operators (optional)
                             break;
                     }
                 }
 
                 this.current = String(result);
                 return result;
-            },
+            },*/
 
 
 
@@ -234,18 +246,7 @@ export default {
             }
             
 
-            /*filterTxt() {
-                this.current = this.current.replace(/[^0-9./%-+e]/g, '-');
-    
-                if ( this.repetidos(this.current,true)|| this.current.startsWith(".")) {
-                     this.current = this.current.replace(/[^0-9./%-+e]/g, '-');
-                }
-                if (this.current.endsWith("-") || this.current.endsWith(".")) {
-                    this.current = this.current.replace(/[^0-9/%+]/g, '');
-                }
-            }
             
-            ,*/
 
         },
 
